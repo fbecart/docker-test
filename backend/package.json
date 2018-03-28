@@ -1,0 +1,13 @@
+{
+  "name": "docker-test-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Graham Cox <graham@grahamcox.co.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "mongodb": "^3.0.5"
+  }
+}
