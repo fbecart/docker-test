@@ -1,0 +1,13 @@
+{
+  "name": "docker-test-e2e",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Graham Cox <graham@grahamcox.co.uk>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nightwatch -e local"
+  },
+  "dependencies": {
+    "nightwatch": "^0.9.20"
+  }
+}

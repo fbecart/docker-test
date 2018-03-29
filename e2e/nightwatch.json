@@ -1,0 +1,38 @@
+{
+  "src_folders" : ["src/tests"],
+  "output_folder" : "target/reports",
+  "page_objects_path" : "src/pages",
+  "globals_path" : "",
+  "test_workers": false,
+  "live_output": false,
+
+  "test_settings" : {
+    "default" : {
+      "launch_url": "http://webapp.app",
+      "selenium_host"  : "localhost",
+      "selenium_port"  : 4444,
+      "silent": true,
+      "screenshots" : {
+        "enabled" : true,
+        "on_failure": true,
+        "on_error": true,
+        "path" : "target/reports"
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome"
+      }
+    },
+
+    "local": {
+      "launch_url" : "http://localhost:3000"
+    },
+
+    "integration_chrome": {
+      "selenium_host"  : "chrome",
+      "selenium_port"  : 4444,
+      "desiredCapabilities": {
+        "browserName": "chrome"
+      }
+    }
+  }
+}
