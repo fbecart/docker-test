@@ -1,10 +1,12 @@
 require('dotenv').config();
 
 const express = require('express');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const todoDao = require('./todoDao');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 function translateTodo(todo) {
@@ -88,4 +90,4 @@ app.put('/todos/:id', (req, res) => {
         });
 });
 
-app.listen(3000, () => console.log('Listening on port 3000!'));
+app.listen(4000, () => console.log('Listening on port 4000!'));
