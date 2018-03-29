@@ -1,0 +1,21 @@
+version: '3'
+services:
+    todos-mongo:
+        image: mongo
+        ports:
+            - "127.0.0.1:27017:27017"
+    todos-backend:
+        image: todos/backend:latest
+        links:
+            - todos-mongo:mongo
+        ports:
+            - "127.0.0.1:4000:4000"
+        environment:
+            MONGODB_URL: mongodb://mongo/27017
+            MONGODB_DATABASE: todos
+    todos-webapp:
+        image: todos/webapp:latest
+        ports:
+            - "127.0.0.1:3000:80"
+        environment:
+            API_URI: http://localhost:4000
