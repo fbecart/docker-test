@@ -1,5 +1,6 @@
 {
   "src_folders" : ["src/tests"],
+  "custom_commands_path" : "src/commands",
   "output_folder" : "target/reports",
   "page_objects_path" : "src/pages",
   "globals_path" : "",
@@ -8,7 +9,7 @@
 
   "test_settings" : {
     "default" : {
-      "launch_url": "http://webapp.app",
+      "launch_url": "http://todos-webapp",
       "selenium_host"  : "localhost",
       "selenium_port"  : 4444,
       "silent": true,
@@ -24,14 +25,22 @@
     },
 
     "local": {
-      "launch_url" : "http://localhost:3000"
+      "launch_url" : "http://localhost:3000",
+      "globals": {
+        "mongo_uri": "mongodb://localhost:27017",
+        "mongo_database": "todo"
+      }
     },
 
     "integration_chrome": {
-      "selenium_host"  : "chrome",
+      "selenium_host"  : "todos-selenium-chrome",
       "selenium_port"  : 4444,
       "desiredCapabilities": {
         "browserName": "chrome"
+      },
+      "globals": {
+        "mongo_uri": "mongodb://todos-mongo:27017",
+        "mongo_database": "todos"
       }
     }
   }

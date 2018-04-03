@@ -43,3 +43,25 @@ from the top level of the project. This will start up a cluster consisting of:
 Once done, you can open up http://localhost:3000 and try out the application.
 
 If you watch the Network View in the developer tools, you will see XHR requests all going direct to http://localhost:4000 instead.
+
+## End-to-End tests
+
+The actual End-To-End tests can be either executed locally, or as part of the Docker environment.
+
+### Executing Locally
+
+TODO
+
+### Executing in Docker
+
+Firstly, the Docker Image needs to be built, as before:
+
+```
+$ docker build -t todos/e2e .
+```
+
+Then the full E2E Cluster can be started.
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.e2e.yml up --exit-code-from todos-e2e
+```

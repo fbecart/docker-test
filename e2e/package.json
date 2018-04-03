@@ -8,6 +8,7 @@
     "start": "nightwatch -e local"
   },
   "dependencies": {
+    "mongodb": "^3.0.5",
     "nightwatch": "^0.9.20"
   }
 }

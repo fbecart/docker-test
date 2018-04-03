@@ -6,12 +6,10 @@ services:
             - "127.0.0.1:27017:27017"
     todos-backend:
         image: todos/backend:latest
-        links:
-            - todos-mongo:mongo
         ports:
             - "127.0.0.1:4000:4000"
         environment:
-            MONGODB_URL: mongodb://mongo/27017
+            MONGODB_URL: mongodb://todos-mongo/27017
             MONGODB_DATABASE: todos
     todos-webapp:
         image: todos/webapp:latest
