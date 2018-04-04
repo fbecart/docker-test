@@ -9,7 +9,5 @@ services:
         image: todos/e2e:latest
         volumes:
             - ./target:/opt/tests/e2e/target
-        environment:
-            NODE_ENV: docker
         command: ./wait-for-it.sh todos-selenium-chrome:4444 -- ./wait-for-it.sh todos-webapp:80 -- ./wait-for-it.sh todos-backend:4000 -- ./node_modules/.bin/nightwatch -e integration_chrome
 

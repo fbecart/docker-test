@@ -6,7 +6,8 @@ RUN yarn install
 
 ENV MONGODB_URL mongodb://mongo:27017
 ENV MONGODB_DATABASE todos
+ENV PORT 4000
 
-EXPOSE 3000/tcp
+EXPOSE 4000/tcp
 
 CMD node index.js
