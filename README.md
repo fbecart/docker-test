@@ -50,7 +50,7 @@ The actual End-To-End tests can be either executed locally, or as part of the Do
 
 ### Executing Locally
 
-TODO
+Executing the tests locally can be done by starting everything up - either manually or in Docker - and executing `yarn start` from the `e2e` directory.
 
 ### Executing in Docker
 
