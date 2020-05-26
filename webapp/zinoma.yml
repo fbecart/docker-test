@@ -1,0 +1,21 @@
+targets:
+    webapp_install_node_dependencies:
+        input_paths: [package.json, yarn.lock]
+        output_paths: [node_modules]
+        build: yarn install
+
+    webapp_build:
+        dependencies: [webapp_install_node_dependencies]
+        input_paths: [.]
+        output_paths: [build]
+        build: yarn build
+
+    webapp_run:
+        dependencies: [webapp_install_node_dependencies]
+        input_paths: [.]
+        service: exec yarn start
+    
+    webapp_docker_build:
+        dependencies: [webapp_build]
+        input_paths: [Dockerfile, build]
+        build: docker build -t todos/webapp .

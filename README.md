@@ -1,67 +1,60 @@
-# Todo List Application - End to End Testing in Docker
+# Žinoma node example
 
+This is an example of a build flow automated with Žinoma.
 
-## Backend
+It automates the build flow of [sazzer/docker-test](https://github.com/sazzer/docker-test).
 
-To run locally:
-```
-$ yarn install
-$ node index.js
-```
+## Setup
 
-To build Docker image:
-```
-docker build -t todos/backend .
-```
+Prerequisites:
 
-## Frontend
+- [Docker](https://docs.docker.com/get-docker/)
+- [yarn](https://classic.yarnpkg.com/en/docs/install)
+- [Žinoma](https://github.com/fbecart/zinoma#installation)
 
-To run locally:
-```
-$ yarn install
-$ yarn start
+Project checkout:
+
+```shell script
+git clone git@github.com:fbecart/docker-test.git
+cd docker-test
 ```
 
-To build Docker image:
-```
-$ yarn build
-$ docker build -t todos/webapp .
-```
+### Experimenting with the incremental build
 
-## Full Stack
+`zinoma e2e_docker_run` will run the full suite of e2e tests in Docker.
 
-To run the full stack in Docker, you first need to follow the above instructions to build the Docker images. You can then start up the cluster by executing:
-```
-docker-compose up
-```
+It should take about a minute to run the following tasks in parallel:
 
-from the top level of the project. This will start up a cluster consisting of:
-* MongoDB
-* Todo List Backend - linked to MongoDB, and exposed on port 4000
-* Todo List Frontend - exposed on port 3000
+- build a Docker image of the backend
+- build the webapp, then build a Docker image of the webapp
+- build a docker image of the e2e tests
+- run the e2e tests
 
-Once done, you can open up http://localhost:3000 and try out the application.
+This command is incremental. Try to run this command twice, and you'll see:
 
-If you watch the Network View in the developer tools, you will see XHR requests all going direct to http://localhost:4000 instead.
-
-## End-to-End tests
-
-The actual End-To-End tests can be either executed locally, or as part of the Docker environment.
-
-### Executing Locally
-
-Executing the tests locally can be done by starting everything up - either manually or in Docker - and executing `yarn start` from the `e2e` directory.
-
-### Executing in Docker
-
-Firstly, the Docker Image needs to be built, as before:
-
-```
-$ docker build -t todos/e2e .
+```shell script
+$ zinoma e2e_docker_run
+INFO - backend_docker_build - Build skipped (Not Modified)
+INFO - e2e_docker_build - Build skipped (Not Modified)
+INFO - webapp_install_node_dependencies - Build skipped (Not Modified)
+INFO - webapp_build - Build skipped (Not Modified)
+INFO - webapp_docker_build - Build skipped (Not Modified)
+INFO - e2e_docker_run - Build skipped (Not Modified)
 ```
 
-Then the full E2E Cluster can be started.
+This time, the command completed in about one second.
+As the sources files haven't been modified, Žinoma was able to understand that the test suite did not need to run again.
 
+Let's introduce a modification to our backend and see what happens:
+
+```shell script
+echo "" >> docker-test/backend/index.js
+zinoma e2e_docker_run
 ```
-docker-compose -f docker-compose.yml -f docker-compose.e2e.yml up --exit-code-from todos-e2e
-```
+
+This command should have taken about 30s, which is 50% faster than a full build.
+
+Based on the changes in the file system, Žinoma is able to discriminate which tasks to run, and which tasks to skip.
+
+This time, it was able to skip the build of the webapp and the e2e tests,
+but it still had to rebuild the backend and to execute the full test suite.
