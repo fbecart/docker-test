@@ -1,18 +1,18 @@
 imports:
-  - backend
-  - webapp
-  - e2e
+  backend: backend
+  webapp: webapp
+  e2e: e2e
 
 targets:
     full_stack_run:
-        dependencies: [backend_run, webapp_run]
+        dependencies: [backend::run, webapp::run]
 
     full_stack_docker_run:
-        dependencies: [backend_docker_build, webapp_docker_build]
+        dependencies: [backend::docker_build, webapp::docker_build]
         service: exec docker-compose up
 
     e2e_docker_run:
-        dependencies: [backend_docker_build, webapp_docker_build, e2e_docker_build]
+        dependencies: [backend::docker_build, webapp::docker_build, e2e::docker_build]
         input_paths:
             - docker-compose.e2e.yml
             - docker-compose.yml

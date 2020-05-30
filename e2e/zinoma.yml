@@ -1,13 +1,15 @@
+name: e2e
+
 targets:
-    e2e_install_node_dependencies:
+    install_node_dependencies:
         input_paths: [package.json, yarn.lock]
         output_paths: [node_modules]
         build: yarn install
     
-    e2e_run:
-        dependencies: [e2e_install_node_dependencies]
+    run:
+        dependencies: [install_node_dependencies]
         build: yarn start
 
-    e2e_docker_build:
+    docker_build:
         input_paths: [.]
         build: docker build -t todos/e2e .

@@ -1,14 +1,16 @@
+name: backend
+
 targets:
-    backend_install_node_dependencies:
+    install_node_dependencies:
         input_paths: [package.json, yarn.lock]
         output_paths: [node_modules]
         build: yarn install
 
-    backend_run:
-        dependencies: [backend_install_node_dependencies]
+    run:
+        dependencies: [install_node_dependencies]
         input_paths: [.]
         service: exec node index.js
 
-    backend_docker_build:
+    docker_build:
         input_paths: [.]
         build: docker build -t todos/backend .
