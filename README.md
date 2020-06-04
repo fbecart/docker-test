@@ -1,6 +1,6 @@
-# Žinoma node example
+# Žinoma Node example
 
-This is an example of a build flow automated with Žinoma.
+This is an example of a build flow automated with [Žinoma](https://github.com/fbecart/zinoma).
 
 It automates the build flow of [sazzer/docker-test](https://github.com/sazzer/docker-test).
 
