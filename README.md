@@ -15,8 +15,8 @@ Prerequisites:
 Project checkout:
 
 ```shell script
-git clone git@github.com:fbecart/docker-test.git
-cd docker-test
+git clone git@github.com:fbecart/docker-node-example.git
+cd docker-node-example
 ```
 
 ### Experimenting with the incremental build
@@ -48,7 +48,7 @@ As the sources files haven't been modified, Žinoma was able to understand that 
 Let's introduce a modification to our backend and see what happens:
 
 ```shell script
-echo "" >> docker-test/backend/index.js
+echo "" >> backend/index.js
 zinoma e2e_docker_run
 ```
 
