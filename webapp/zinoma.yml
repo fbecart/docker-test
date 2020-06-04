@@ -1,23 +1,31 @@
 name: webapp
 
 targets:
-    install_node_dependencies:
-        input_paths: [package.json, yarn.lock]
-        output_paths: [node_modules]
-        build: yarn install
+  install_node_dependencies:
+    input:
+      - paths: [package.json, yarn.lock]
+    output:
+      - paths: [node_modules]
+    build: yarn install
 
-    build:
-        dependencies: [install_node_dependencies]
-        input_paths: [.]
-        output_paths: [build]
-        build: yarn build
+  build:
+    dependencies: [install_node_dependencies]
+    input:
+      - paths: [package.json, node_modules, src, public]
+    output:
+      - paths: [build]
+    build: yarn build
 
-    run:
-        dependencies: [install_node_dependencies]
-        input_paths: [.]
-        service: exec yarn start
-    
-    docker_build:
-        dependencies: [build]
-        input_paths: [Dockerfile, build]
-        build: docker build -t todos/webapp .
+  run:
+    dependencies: [install_node_dependencies]
+    input:
+      - paths: [.]
+    service: exec yarn start
+
+  docker_build:
+    dependencies: [build]
+    input:
+      - paths: [Dockerfile, build]
+    output:
+      - cmd_stdout: docker image ls todos/webapp:latest --format "{{.ID}}"
+    build: docker build -t todos/webapp .

@@ -1,15 +1,20 @@
 name: e2e
 
 targets:
-    install_node_dependencies:
-        input_paths: [package.json, yarn.lock]
-        output_paths: [node_modules]
-        build: yarn install
-    
-    run:
-        dependencies: [install_node_dependencies]
-        build: yarn start
+  install_node_dependencies:
+    input:
+      - paths: [package.json, yarn.lock]
+    output:
+      - paths: [node_modules]
+    build: yarn install
 
-    docker_build:
-        input_paths: [.]
-        build: docker build -t todos/e2e .
+  run:
+    dependencies: [install_node_dependencies]
+    build: yarn start
+
+  docker_build:
+    input:
+      - paths: [.]
+    output:
+      - cmd_stdout: 'docker image ls todos/e2e:latest --format "{{.ID}}"'
+    build: docker build -t todos/e2e .

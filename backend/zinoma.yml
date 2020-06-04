@@ -1,16 +1,22 @@
 name: backend
 
 targets:
-    install_node_dependencies:
-        input_paths: [package.json, yarn.lock]
-        output_paths: [node_modules]
-        build: yarn install
+  install_node_dependencies:
+    input:
+      - paths: [package.json, yarn.lock]
+    output:
+      - paths: [node_modules]
+    build: yarn install
 
-    run:
-        dependencies: [install_node_dependencies]
-        input_paths: [.]
-        service: exec node index.js
+  run:
+    dependencies: [install_node_dependencies]
+    input:
+      - paths: [.]
+    service: exec node index.js
 
-    docker_build:
-        input_paths: [.]
-        build: docker build -t todos/backend .
+  docker_build:
+    input:
+      - paths: [.]
+    output:
+      - cmd_stdout: 'docker image ls todos/backend:latest --format "{{.ID}}"'
+    build: docker build -t todos/backend .
