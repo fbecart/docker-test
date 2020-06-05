@@ -9,6 +9,9 @@ targets:
 
   full_stack_docker_run:
     dependencies: [backend::docker_build, webapp::docker_build]
+    input:
+      - cmd_stdout: 'docker image ls todos/backend:latest --format "{{.ID}}"'
+      - cmd_stdout: 'docker image ls todos/webapp:latest --format "{{.ID}}"'
     service: exec docker-compose up
 
   e2e_docker_run:
