@@ -10,11 +10,15 @@ targets:
 
   run:
     dependencies: [install_node_dependencies]
+    input:
+      - paths: [.]
     build: yarn start
 
   docker_build:
     input:
-      - paths: [.]
+      - paths: [Dockerfile]
+      - paths: [package.json, yarn.lock, nightwatch.json, wait-for-it.sh]
+      - paths: [src]
     output:
       - cmd_stdout: 'docker image ls todos/e2e:latest --format "{{.ID}}"'
     build: docker build -t todos/e2e .

@@ -9,14 +9,17 @@ targets:
     build: yarn install
 
   run:
-    dependencies: [install_node_dependencies]
     input:
-      - paths: [.]
+      - install_node_dependencies.output
+      - paths: [index.js, todoDao.js]
+      - paths: [.env]
     service: exec node index.js
 
   docker_build:
     input:
-      - paths: [.]
+      - paths: [Dockerfile]
+      - paths: [index.js, todoDao.js]
+      - paths: [package.json, yarn.lock]
     output:
       - cmd_stdout: 'docker image ls todos/backend:latest --format "{{.ID}}"'
     build: docker build -t todos/backend .
